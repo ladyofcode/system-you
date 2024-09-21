@@ -1,0 +1,45 @@
+.appShell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--mantine-color-body);
+  color: var(--mantine-color-text);
+}
+
+.header {
+  border-bottom: 1px solid var(--mantine-color-gray-2);
+  background-color: var(--mantine-color-body);
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5rem;
+}
+
+.main {
+  flex: 1;
+  background-color: var(--mantine-color-body);
+}
+
+.footer {
+  border-top: 1px solid var(--mantine-color-gray-2);
+  background-color: var(--mantine-color-body);
+}
+
+.footerLeft, .footerRight {
+  display: flex;
+  align-items: center;
+}
+
+/* Remove any background-color properties if they exist */
