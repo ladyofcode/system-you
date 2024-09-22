@@ -4,6 +4,7 @@ import "@/styles/globals.css"
 import { ThemeProvider } from "@/components/ThemeProvider"
 import Link from 'next/link'
 import { ModeToggle } from "@/components/ModeToggle"
+import { Footer } from '@/components/Footer'
 
 const sourceSansPro = Source_Sans_3({ subsets: ["latin"], variable: "--font-sans" })
 const sourceSerifPro = Source_Serif_4({ subsets: ["latin"], weight: "300", variable: "--font-serif" })
@@ -20,41 +21,27 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${sourceSansPro.variable} ${sourceSerifPro.variable} font-sans min-h-screen bg-background text-foreground`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-        >
-          <div className="flex flex-col min-h-screen">
-            <header className="bg-background/50 backdrop-blur-sm">
-              <div className="container mx-auto flex justify-between items-center h-16">
-                <Link href="/" className="font-serif font-light text-xl">System: You</Link>
-                <nav className="flex items-center space-x-4">
-                  <Link href="/resources" className="hover:underline">Resources</Link>
-                  <Link href="/login" className="hover:underline">Log in</Link>
-                  <ModeToggle />
+      <body className={`${sourceSansPro.variable} ${sourceSerifPro.variable} font-sans dotted-background`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="flex flex-col min-h-screen text-foreground">
+            <header className="bg-background/50">
+              <div className="container mx-auto px-4 py-8 max-w-[1200px]">
+                <nav className="flex justify-between items-center">
+                  <Link href="/" className="text-2xl font-bold font-serif">
+                    System: You
+                  </Link>
+                  <div className="flex items-center space-x-6">
+                    <Link href="/resources" className="hover:underline">Resources</Link>
+                    <Link href="/login" className="hover:underline">Log in</Link>
+                    <ModeToggle />
+                  </div>
                 </nav>
               </div>
             </header>
-
-            <main className="flex-grow container mx-auto py-8">
+            <main className="flex-grow">
               {children}
             </main>
-
-            <footer className="bg-footer">
-              <div className="container mx-auto flex justify-between items-center h-16">
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm">built with ❤️ by</span>
-                  <span className="text-sm">Tabs</span>
-                  <span className="text-sm">James</span>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <Link href="/about" className="text-sm hover:underline">About</Link>
-                  <Link href="/contact" className="text-sm hover:underline">Contact</Link>
-                </div>
-              </div>
-            </footer>
+            <Footer />
           </div>
         </ThemeProvider>
       </body>
