@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // Your Next.js config options here
+    crossOrigin: 'anonymous',
 };
 
 module.exports = nextConfig;

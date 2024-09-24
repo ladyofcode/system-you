@@ -1,66 +1,85 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { PageTitle } from '@/components/PageTitle';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
+import { Client, Account, ID } from "appwrite";
 
-export default function SignupPage() {
+export default function SignUpPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('');
+  const [error, setError] = useState('');
+  const router = useRouter();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // TODO: Implement signup logic
-    console.log('Signup attempted with:', email, password);
+    setError('');
+    try {
+      const client = new Client()
+        .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
+        .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
+
+      const account = new Account(client);
+      await account.create(ID.unique(), email, password, name);
+      await account.createEmailPasswordSession(email, password);
+
+      router.push('/account');
+    } catch (error: any) {
+      setError(error.message);
+    }
   };
 
   return (
-    <div className="container mx-auto max-w-[1200px] px-4 md:px-8 py-8 md:py-12">
-      <PageTitle className="text-4xl md:text-5xl mb-8 md:mb-12 p-4 md:p-6 bg-background rounded-lg text-center">Sign up</PageTitle>
-      
-      <div className="bg-background p-4 md:p-8 rounded-lg">
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-          <div className="mb-4">
-            <label htmlFor="email" className="block mb-2">Email</label>
+    <div className="flex justify-center items-start min-h-screen px-4 py-8 pt-20">
+      <div className="w-full max-w-md">
+        <PageTitle className="text-4xl md:text-5xl mb-8 p-4 md:p-6 bg-background rounded-lg text-center">Sign up</PageTitle>
+
+        {/* <div className="bg-background p-6 md:p-8 rounded-lg">
+          <form onSubmit={handleSubmit}>
+            {error && <p className="text-red-500 mb-4">{error}</p>}
             <Input
-              type="email"
               id="email"
+              name="email"
+              placeholder="Email"
+              type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="mb-4"
               required
-              className="w-full"
             />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="password" className="block mb-2">Password</label>
             <Input
-              type="password"
               id="password"
+              name="password"
+              placeholder="Password"
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              minLength={8}
+              className="mb-4"
               required
-              className="w-full"
             />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="confirmPassword" className="block mb-2">Confirm Password</label>
             <Input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              id="name"
+              name="name"
+              placeholder="Name"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="mb-4"
               required
-              className="w-full"
             />
+            <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+              Sign up
+            </Button>
+          </form>
+          <div className="text-center mt-4">
+            <Link href="/login" className="text-sm hover:underline">Have an account? Log in</Link>
           </div>
-          <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">Sign up</Button>
-        </form>
-        <div className="text-center mt-4">
-          <Link href="/login" className="text-sm hover:underline">Have an account? Log in</Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );

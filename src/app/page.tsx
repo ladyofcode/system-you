@@ -1,10 +1,13 @@
-'use client';
-
+// import { getLoggedInUser } from "@/lib/server/appwrite";
+import { redirect } from "next/navigation";
 import { PageTitle } from '@/components/PageTitle'
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import NewsletterForm from '@/components/NewsletterForm'
 
-export default function Home() {
+export default async function Home() {
+  // const user = await getLoggedInUser();
+
+  // if (user) redirect("/account");
+
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-8rem)]">
       <div className="bg-background p-16 rounded-lg w-full max-w-2xl">
@@ -17,24 +20,8 @@ export default function Home() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex items-center justify-center">
-          <Input
-            type="email"
-            placeholder="Enter your email"
-            className="max-w-sm w-full mr-2"
-            required
-          />
-          <Button type="submit" className="bg-primary text-primary-foreground hover:bg-primary-dark">
-            Sign up
-          </Button>
-        </form>
+        <NewsletterForm />
       </div>
     </div>
   )
-}
-
-function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-  event.preventDefault()
-  // TODO: Implement MailerLite integration here
-  console.log("Form submitted")
 }

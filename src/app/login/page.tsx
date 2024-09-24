@@ -1,34 +1,24 @@
-'use client';
+import { redirect } from "next/navigation";
 
-import { useState } from 'react';
 import { PageTitle } from '@/components/PageTitle';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
 
-export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // TODO: Implement login logic
-    console.log('Login attempted with:', email, password);
-  };
+export default async function LoginPage() {
 
   return (
     <div className="container mx-auto max-w-[1200px] px-4 md:px-8 py-8 md:py-12">
       <PageTitle className="text-4xl md:text-5xl mb-8 md:mb-12 p-4 md:p-6 bg-background rounded-lg text-center">Log in</PageTitle>
       
-      <div className="bg-background p-4 md:p-8 rounded-lg">
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+      {/* <div className="bg-background p-4 md:p-8 rounded-lg">
+        <form method="post" className="max-w-md mx-auto">
           <div className="mb-4">
             <label htmlFor="email" className="block mb-2">Email</label>
             <Input
               type="email"
               id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
               required
               className="w-full"
             />
@@ -38,8 +28,7 @@ export default function LoginPage() {
             <Input
               type="password"
               id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
               required
               className="w-full"
             />
@@ -49,7 +38,7 @@ export default function LoginPage() {
         <div className="text-center mt-4">
           <Link href="/signup" className="text-sm hover:underline">No account? Sign up</Link>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

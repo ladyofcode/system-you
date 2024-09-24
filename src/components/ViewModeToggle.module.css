@@ -1,0 +1,12 @@
+.button {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.active {
+  background-color: #e5e7eb;
+}
+
+:global(.dark) .active {
+  background-color: #374151;
+}
