@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 import { Source_Sans_3, Source_Serif_4 } from "next/font/google"
 import "@/styles/globals.css"
 import { ThemeProvider } from "@/components/ThemeProvider"
-import { UserProvider } from '@/contexts/UserContext'
 import { Menu } from '@/components/Menu'
 
 const sourceSansPro = Source_Sans_3({ subsets: ["latin"], variable: "--font-sans" })
@@ -27,10 +26,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <UserProvider>
             <Menu />
-            {children}
-          </UserProvider>
+          {children}
         </ThemeProvider>
       </body>
     </html>
