@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { Book, FileText, Video, Headphones, Grid, List } from 'lucide-react'
 import { PageTitle } from '@/components/PageTitle'
 import Link from 'next/link'
-import { getResources } from '@/lib/server/appwrite'
 import { Models } from 'appwrite';
 
 type AppwriteResource = Models.Document & {
@@ -21,13 +20,17 @@ export default function ResourcesPage() {
   useEffect(() => {
     const fetchResources = async () => {
       try {
-        console.log("Fetching resources...");
-        const fetchedResources = await getResources();
-        console.log('Resources from Appwrite: ', fetchedResources);
+        console.log('Fetching resources...');
+        const response = await fetch('/api/resources');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const fetchedResources = await response.json();
+        console.log('Fetched resources:', fetchedResources);
         setAppwriteResources(fetchedResources as AppwriteResource[]);
         setError(null);
       } catch (error) {
-        console.error('Error fetching Resources:', error);
+        console.error('Error in fetchResources:', error);
         if (error instanceof Error) {
           setError(`Failed to fetch resources: ${error.message}`);
         } else {

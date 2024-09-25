@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { PageTitle } from '@/components/PageTitle';
 import { Book, FileText, Video, Headphones } from 'lucide-react';
-import { getResourceById } from '@/lib/server/appwrite';
 
 type AppwriteResource = {
   $id: string;
@@ -22,18 +21,18 @@ export default function ResourcePage() {
   useEffect(() => {
     const fetchResource = async () => {
       try {
-        const resourceId = Array.isArray(params.id) ? params.id[0] : params.id;
+        const resourceId = params?.id;
+        if (!resourceId) {
+          throw new Error('Resource ID is missing');
+        }
         console.log('Fetching resource with ID:', resourceId);
-        const fetchedResource = await getResourceById(resourceId);
-        console.log('Resource from Appwrite:', fetchedResource);
-        const appwriteResource: AppwriteResource = {
-          $id: fetchedResource.$id,
-          title: fetchedResource.title,
-          category: fetchedResource.category,
-          createdBy: fetchedResource.createdBy,
-          description: fetchedResource.description,
-        };
-        setResource(appwriteResource);
+        const response = await fetch(`/api/resources/${resourceId}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const fetchedResource = await response.json();
+        console.log('Fetched resource:', fetchedResource);
+        setResource(fetchedResource);
         setError(null);
       } catch (error) {
         console.error('Error fetching resource:', error);
@@ -44,9 +43,8 @@ export default function ResourcePage() {
         }
       }
     };
-
     fetchResource();
-  }, [params.id]);
+  }, [params?.id]);
 
   const TypeIcon = () => {
     if (!resource) return null;
