@@ -21,6 +21,7 @@ export function AuthButton() {
         await account.get();
         setIsLoggedIn(true);
       } catch (error) {
+        console.error('Session check failed', error);
         setIsLoggedIn(false);
       }
     };
@@ -38,8 +39,8 @@ export function AuthButton() {
       await account.deleteSession('current');
       setIsLoggedIn(false);
       router.push('/');
-    } catch (error) {
-      console.error('Logout failed', error);
+    } catch {
+    // You can add error handling here if needed
     }
   };
 

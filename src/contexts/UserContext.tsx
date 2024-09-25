@@ -1,6 +1,6 @@
 'use client'; // Add this at the top of the file
 
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect, useCallback, useMemo } from 'react';
 import { Client, Account } from 'appwrite';
 
 interface User {
@@ -19,31 +19,35 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const client = new Client()
+  const client = useMemo(() => new Client()
     .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
-    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!), []);
 
-  const account = new Account(client);
+  const account = useMemo(() => new Account(client), [client]);
 
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     try {
       const userData = await account.get();
       setUser({ name: userData.name });
-    } catch (error) {
+    } catch (_error) {
+      console.log('Error fetching user:', _error);
       setUser(null);
     }
-  };
-  const login = async (email: string, password: string) => {
+  }, [account]);
+
+  const login = useCallback(async (email: string, password: string) => {
     await account.createEmailPasswordSession(email, password);
     await fetchUser();
-  };
+  }, [account, fetchUser]);
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [fetchUser]);
+
+  const value = useMemo(() => ({ user, setUser, fetchUser, login }), [user, fetchUser, login]);
 
   return (
-    <UserContext.Provider value={{ user, setUser, fetchUser, login }}>
+    <UserContext.Provider value={value}>
       {children}
     </UserContext.Provider>
   );

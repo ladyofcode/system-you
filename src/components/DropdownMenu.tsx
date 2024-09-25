@@ -12,7 +12,6 @@ const DropdownMenu = () => {
             <Link href="/account">
                 <a className="dropdown-item">Account</a>
             </Link>
-            {/* Add other menu items here */}
         </div>
     );
 };

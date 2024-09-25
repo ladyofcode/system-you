@@ -1,5 +1,5 @@
 // import { getLoggedInUser } from "@/lib/server/appwrite";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 import { PageTitle } from '@/components/PageTitle'
 import NewsletterForm from '@/components/NewsletterForm'
 

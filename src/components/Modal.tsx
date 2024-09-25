@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useCallback } from 'react';
+import { ReactNode } from 'react';
 import { Button } from "@/components/ui/button";
 
 interface ModalProps {

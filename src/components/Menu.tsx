@@ -1,42 +1,42 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ModeToggle } from "@/components/ModeToggle";
-import { Client, Account } from "appwrite";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { User } from 'lucide-react';
+// import { Client, Account } from "appwrite";
+// import { Button } from "@/components/ui/button";
+// import {
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuItem,
+//   DropdownMenuTrigger,
+// } from "@/components/ui/dropdown-menu";
+// import { User } from 'lucide-react';
 // import { useUser } from '@/contexts/UserContext';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 export function Menu() {
   // const { user, setUser, fetchUser } = useUser();
-  const router = useRouter();
+  // const router = useRouter();
 
   // useEffect(() => {
   //   fetchUser();
   // }, [fetchUser]);
 
-  const handleLogout = async () => {
-    try {
-      const client = new Client()
-        .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
-        .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
+  // const handleLogout = async () => {
+  //   try {
+  //     const client = new Client()
+  //       .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
+  //       .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
 
-      const account = new Account(client);
-      await account.deleteSession('current');
-      // setUser(null);
-      router.push('/login');
-    } catch (error) {
-      console.error('Logout failed', error);
-    }
-  };
+  //     const account = new Account(client);
+  //     await account.deleteSession('current');
+  //     // setUser(null);
+  //     router.push('/login');
+  //   } catch (error) {
+  //     console.error('Logout failed', error);
+  //   }
+  // };
 
   return (
     <nav className="w-full bg-background">
