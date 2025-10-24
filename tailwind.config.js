@@ -1,11 +1,8 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
     darkMode: ["class"],
     content: [
-        './pages/**/*.{ts,tsx}',
-        './components/**/*.{ts,tsx}',
-        './app/**/*.{ts,tsx}',
-        './src/**/*.{ts,tsx}',
+        './src/**/*.{html,js,svelte,ts}',
     ],
     theme: {
         container: {
@@ -17,8 +14,9 @@ module.exports = {
         },
         extend: {
             fontFamily: {
-                sans: ['var(--font-sans)'],
-                serif: ['var(--font-serif)'],
+                sans: ['Geist', 'Inter', 'system-ui', 'sans-serif'],
+                serif: ['Geist', 'Georgia', 'serif'],
+                mono: ['Geist Mono', 'Monaco', 'Consolas', 'monospace'],
             },
             colors: {
                 border: "hsl(var(--border))",
@@ -55,7 +53,7 @@ module.exports = {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
-                primary: '#dad1b2',
+                'primary-custom': '#dad1b2',
                 'primary-dark': '#c2b99d',
             },
             borderRadius: {
